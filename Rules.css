@@ -1,0 +1,155 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto;
+}
+:root {
+  --page-background: #e9eef8;
+
+  --primary: #123ff1;
+  --primary-dark: #0c2da7;
+  --text: #121212;
+  --muted: #626b7d;
+  --card: #ffffff;
+  --border: #e2e6ef;
+  --warning-bg: #fff7df;
+  --warning-border: #f0d477;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Roboto", Arial, sans-serif;
+  color: var(--text);
+  background: var(--page-background);
+}
+
+.rules-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.rules-card {
+  width: min(100%, 950px);
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 15px 40px rgba(25, 40, 80, 0.12);
+}
+
+.back-btn {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-btn:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+.small-heading {
+  margin-bottom: 6px;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin-bottom: 8px;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.intro {
+  max-width: 650px;
+  margin-bottom: 24px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.rules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.rule-box {
+  display: flex;
+  gap: 13px;
+  padding: 16px;
+  background: #f8faff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.rule-number {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  color: white;
+  background: var(--primary);
+  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.rule-box h2 {
+  margin-bottom: 3px;
+  font-size: 1rem;
+}
+
+.rule-box p {
+  color: var(--muted);
+  font-size: 0.87rem;
+  line-height: 1.4;
+}
+
+.warning-box {
+  margin-top: 20px;
+  padding: 14px 16px;
+  color: #765900;
+  background: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* Mobile layout */
+
+@media (max-width: 650px) {
+  .rules-page {
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .rules-card {
+    padding: 22px 18px;
+  }
+
+  .rules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
