@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="Lost1.css" />
+    <title>Lost & Found</title>
+</head>
+
+<body>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="the-drive-on-the-road-at-sunset.3840x2160.mp4" type="video/mp4" />
+    </video>
+
+    <div class="megaContainer">
+        <div class="form-section">
+            <div class="form">
+                <h1 class="form-title">Report a Lost Item</h1>
+                <form class="details" id="form">
+                    <label for="Title">Short Description of Item:</label>
+                    <input type="text" id="Title" autocomplete="off"
+                        placeholder="e.g. Lost my calculator" required />
+
+                    <label for="Name">Name:</label>
+                    <input type="text" id="Name" autocomplete="off" placeholder="Your Name" required />
+
+                    <label for="room">Room No:</label>
+                    <input type="text" id="room" autocomplete="off" placeholder="Your Room No." required />
+
+                    <label for="studentId">Student ID:</label>
+                    <input type="text" id="studentId" autocomplete="off" placeholder="Your Student ID" required />
+
+                    <label for="desc">Brief Description:</label>
+                    <textarea id="desc" rows="3"
+                        placeholder="Describe the item (color, brand, distinguishing marks...)" required></textarea>
+
+                    <label for="date">Date Lost:</label>
+                    <input type="date" id="date" required />
+
+                    <label for="time">Time Lost:</label>
+                    <input type="time" id="time" required />
+
+                    <button id="btn" type="submit">Submit Complaint</button>
+                    <a href="index.html" id="backBtn">&larr; Back to Home</a>
+                </form>
+            </div>
+        </div>
+
+        <div class="cards-section">
+            <div class="container1">
+                <div class="container1-title">
+                    <h1>Lost &amp; Found Reports</h1>
+                </div>
+                <div id="cardsList">
+                    <div class="card">
+                        <div id="text">
+                            <h1>I forgot My Calculator in Room 211</h1>
+                            <p><strong>Reported by:</strong> Random Person &middot; Room 208</p>
+                            <p class="card-desc">Black Casio scientific calculator, small crack on the back cover.</p>
+                            <p class="card-meta">Lost on 09 Aug 2026 at 3:30 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="Lost1.js"></script>
+</body>
+
+</html>
