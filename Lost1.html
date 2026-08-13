@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="Lost1.css" />
-    <title>Lost & Found</title>
+    <title>Lost Items - Campus Share Hub</title>
 </head>
 
 <body>
@@ -17,27 +16,52 @@
         <source src="the-drive-on-the-road-at-sunset.3840x2160.mp4" type="video/mp4" />
     </video>
 
+    <header class="Landing">
+        <nav class="landing_bar">
+            <div class="nav-left">
+                <div class="title-name">
+                    <h1>Campus Share Hub</h1>
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="locaters">
+                    <a href="index.html">Home</a>
+                    <a href="Found1.html">Found Items</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
     <div class="megaContainer">
+        <!-- Form Section -->
         <div class="form-section">
             <div class="form">
                 <h1 class="form-title">Report a Lost Item</h1>
                 <form class="details" id="form">
-                    <label for="Title">Short Description of Item:</label>
-                    <input type="text" id="Title" autocomplete="off"
-                        placeholder="e.g. Lost my calculator" required />
+                    <label for="Title">Short Item Title:</label>
+                    <input type="text" id="Title" placeholder="e.g. Lost Casio Calculator" required />
 
-                    <label for="Name">Name:</label>
-                    <input type="text" id="Name" autocomplete="off" placeholder="Your Name" required />
+                    <label for="category">Category:</label>
+                    <select id="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Keys & Wallet">Keys & Wallet</option>
+                        <option value="Books & Notes">Books & Notes</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Other">Other</option>
+                    </select>
 
-                    <label for="room">Room No:</label>
-                    <input type="text" id="room" autocomplete="off" placeholder="Your Room No." required />
+                    <label for="Name">Your Name:</label>
+                    <input type="text" id="Name" placeholder="Your Name" required />
+
+                    <label for="room">Room / Hostel No:</label>
+                    <input type="text" id="room" placeholder="e.g. Room 211" required />
 
                     <label for="studentId">Student ID:</label>
-                    <input type="text" id="studentId" autocomplete="off" placeholder="Your Student ID" required />
+                    <input type="text" id="studentId" placeholder="e.g. 2026CS102" required />
 
                     <label for="desc">Brief Description:</label>
-                    <textarea id="desc" rows="3"
-                        placeholder="Describe the item (color, brand, distinguishing marks...)" required></textarea>
+                    <textarea id="desc" rows="3" placeholder="Color, brand, unique details..." required></textarea>
 
                     <label for="date">Date Lost:</label>
                     <input type="date" id="date" required />
@@ -45,32 +69,78 @@
                     <label for="time">Time Lost:</label>
                     <input type="time" id="time" required />
 
+                    <label for="itemImage">Upload Item Photo (Optional):</label>
+                    <input type="file" id="itemImage" accept="image/*" />
+                    <div id="imagePreviewContainer" style="display: none;">
+                        <img id="imagePreview" src="" alt="Preview" />
+                    </div>
+
                     <button id="btn" type="submit">Submit Complaint</button>
                     <a href="index.html" id="backBtn">&larr; Back to Home</a>
                 </form>
             </div>
         </div>
 
+        <!-- Cards Section -->
         <div class="cards-section">
             <div class="container1">
                 <div class="container1-title">
-                    <h1>Lost &amp; Found Reports</h1>
-                </div>
-                <div id="cardsList">
-                    <div class="card">
-                        <div id="text">
-                            <h1>I forgot My Calculator in Room 211</h1>
-                            <p><strong>Reported by:</strong> Random Person &middot; Room 208</p>
-                            <p class="card-desc">Black Casio scientific calculator, small crack on the back cover.</p>
-                            <p class="card-meta">Lost on 09 Aug 2026 at 3:30 PM</p>
-                        </div>
+                    <h1>Lost Items Reports</h1>
+                    <!-- Stats Ribbon -->
+                    <div class="stats-bar">
+                        <div class="stat-pill">Total Active: <span id="statTotal">0</span></div>
+                        <div class="stat-pill">Resolved: <span id="statResolved">0</span></div>
                     </div>
                 </div>
+
+                <!-- Search & Filters -->
+                <div class="filter-bar">
+                    <input type="text" id="searchInput" placeholder="🔍 Search lost items..." />
+                    <select id="categoryFilter">
+                        <option value="All">All Categories</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Keys & Wallet">Keys & Wallet</option>
+                        <option value="Books & Notes">Books & Notes</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <select id="sortOrder">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                </div>
+
+                <div id="cardsList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dynamic Containers for Toasts and Custom Modals -->
+    <div id="toast-container"></div>
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-box">
+            <h3 id="modalTitle">Confirmation</h3>
+            <p id="modalMessage">Are you sure?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-cancel" id="modalCancelBtn">Cancel</button>
+                <button class="modal-btn modal-btn-confirm" id="modalConfirmBtn">Confirm</button>
             </div>
         </div>
     </div>
 
     <script src="Lost1.js"></script>
-</body>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        const supabase = createClient('https://oaovywqdgxhckrknyicf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hb3Z5d3FkZ3hoY2tya255aWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NDA1MTMsImV4cCI6MjEwMjAxNjUxM30.Jl26NxPUbC90LorTM7eHeNzh0EaOhUKLamgO9PVML78');
 
+        async function checkAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                alert('Access restricted! Please log in first.');
+                window.location.href = 'index.html';
+            }
+        }
+        checkAuth();
+    </script>
+</body>
 </html>
