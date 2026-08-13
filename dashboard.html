@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="Borrow.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        *{
+            font-family: Roboto;
+        }
+    </style>
+    <title>Student Dashboard - Campus Share Hub</title>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="bg1-video">
+        <source src="the-drive-on-the-road-at-sunset.3840x2160.mp4">
+    </video>
+
+    <header class="Landing">
+        <nav class="landing_bar">
+            <div class="nav-left">
+                <div class="title-name">
+                    <h1>Campus Share Hub</h1>
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="locaters" id="navLinks">
+                    <a href="index.html">Home</a>
+                    <a href="index1.html">Rules</a>
+                    <a href="Lost1.html">Lost Items</a>
+                    <a href="found1.html">Found Items</a>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button id="logoutBtn" style="padding: 8px 16px; background: #ef4444; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding-top: 120px; width: 90%; max-width: 1200px; margin: 0 auto;">
+        <div class="Hero-AI" style="text-align: left; opacity: 0.96;">
+            <h1 id="welcomeHeading">Welcome to Your Dashboard</h1>
+            <p class="ai-subtitle" style="text-align: left;">Access all your campus tools, reports, and borrowing requests below.</p>
+            
+            <div class="feature-grid" style="margin-top: 30px;">
+                <article class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h2>Report Lost Item</h2>
+                    <p>Submit a report for an item you lost on campus or check previously reported lost items.</p>
+                    <a href="Lost1.html" style="color: #6d28d9; font-weight: 700;">Open Lost Items →</a>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">📦</div>
+                    <h2>Report Found Item</h2>
+                    <p>Submit a report for an item you found or browse recent items found by fellow students.</p>
+                    <a href="found1.html" style="color: #6d28d9; font-weight: 700;">Open Found Items →</a>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h2>Borrow & Lend Marketplace</h2>
+                    <p>Lend your unused calculators, books, and chargers or post a borrow request.</p>
+                    <a href="index.html#Features" style="color: #6d28d9; font-weight: 700;">View Marketplace →</a>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h2>Activity Tracking</h2>
+                    <p>Monitor your active requests, return deadlines, and approval statuses in real-time.</p>
+                    <a href="#" onclick="alert('Tracking module active!')" style="color: #6d28d9; font-weight: 700;">View My History →</a>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        const supabase = createClient('https://oaovywqdgxhckrknyicf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hb3Z5d3FkZ3hoY2tya255aWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NDA1MTMsImV4cCI6MjEwMjAxNjUxM30.Jl26NxPUbC90LorTM7eHeNzh0EaOhUKLamgO9PVML78');
+
+        // Dashboard Protection Check
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            alert('Access restricted! Please log in first.');
+            window.location.href = 'index.html';
+        } else {
+            const name = session.user.user_metadata?.full_name || 'Student';
+            document.getElementById('welcomeHeading').innerText = `Welcome back, ${name}!`;
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>
