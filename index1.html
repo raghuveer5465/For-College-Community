@@ -5,85 +5,286 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="Rules.css">
-    <title>Rules</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Borrow.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <title>Campus Share Hub</title>
 </head>
 <body>
-  <main class="rules-page">
-    <section class="rules-card" aria-labelledby="rules-title">
-      <a href="index.html" class="back-btn">
-        ← Back to Home
-      </a>
-      <p class="small-heading">College Helpers Community</p>
-      <h1 id="rules-title">Rules & Guidelines</h1>
-      <p class="intro">
-        Follow these simple rules to keep College Share Hub safe,
-        respectful, and useful for everyone.
-      </p>
-      <div class="rules-grid">
-        <article class="rule-box">
-          <span class="rule-number">01</span>
-          <div>
-            <h2>Verified Users Only</h2>
+    <video autoplay muted loop playsinline id="bg1-video">
+        <source src="the-drive-on-the-road-at-sunset.3840x2160.mp4">
+    </video>
+
+    <header class="Landing">
+        <nav class="landing_bar">
+            <div class="nav-left">
+                <div class="title-name">
+                    <h1>Campus Share Hub</h1>
+                </div>
+            </div>
+            <div class="nav-center">
+                <div class="locaters" id="navLinks">
+                    <a href="#Home">Home</a>
+                    <a href="index1.html">Rules</a>
+                    <a href="#Features">Features</a>
+                    <a href="#FAQs">FAQs</a>
+                    <a href="#AskNemo">Ask Nemo</a>
+                    <div class="nav-auth">
+                        <a href="#" id="Login-btn">Login</a>
+                        <a href="#" id="Register-btn">Register</a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-right">
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu" aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div id="page-content">
+        <main>
+            <section class="Hero-encourager" id="Home">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <p class="hero-label">WELCOME TO CAMPUS SHARE HUB</p>
+                        <h1>Find what you lost. <span>Borrow what you need.</span></h1>
+                        <p class="hero-description">
+                            A trusted campus platform where students can find lost belongings, borrow academic essentials, and help one another.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#Features" class="hero-btn primary-btn">Explore Features</a>
+                            <a href="#" class="hero-btn secondary-btn protected-feature">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="hero-message">
+                        <div class="floating-card">
+                            <span class="card-icon">✓</span>
+                            <div>
+                                <strong>Student Verified</strong>
+                                <small>Safe campus sharing</small>
+                            </div>
+                        </div>
+                        <div class="floating-card second-card">
+                            <span class="card-icon">↔</span>
+                            <div>
+                                <strong>Find & Borrow</strong>
+                                <small>Help your campus community</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="Hero-details" id="Features">
+                <div class="section-heading">
+                    <p class="section-label">WHAT YOU CAN DO</p>
+                    <h1>One platform. All helpful services.</h1>
+                    <p>Campus Share Hub makes it easier for students to find belongings and access academic tools.</p>
+                </div>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">⌕</div>
+                        <h2>Report Lost Item</h2>
+                        <p>Report lost items, discover found belongings, and help return them to their rightful owners.</p>
+                        <a href="#" class="protected-feature" data-target="Lost1.html">Learn more →</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">⌕</div>
+                        <h2>Report Found Item</h2>
+                        <p>Report found items across campus and connect safely with students to return them.</p>
+                        <a href="#" class="protected-feature" data-target="Found1.html">Learn more →</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">↔</div>
+                        <h2>Borrow & Lend</h2>
+                        <p>Borrow useful academic items such as chargers, calculators, books, and cables from verified students.</p>
+                        <a href="#" class="protected-feature">Learn more →</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">◷</div>
+                        <h2>Track Everything</h2>
+                        <p>Keep track of reports, requests, return dates, and the status of every single transaction.</p>
+                        <a href="#" class="protected-feature">Learn more →</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="Hero-faqs" id="FAQs">
+    <div class="section-heading">
+        <p class="section-label">HAVE QUESTIONS?</p>
+        <h1>Frequently Asked Questions</h1>
+        <p>
+            Here are some simple answers about using Campus Share Hub.
+        </p>
+    </div>
+    <div class="faq-list">
+        <details>
+            <summary>Who can use Campus Share Hub?</summary>
             <p>
-              Use accurate information and keep your account details private.
+                Verified students and authorized members of the college
+                community can use the platform.
             </p>
-          </div>
-        </article>
-        <article class="rule-box">
-          <span class="rule-number">02</span>
-          <div>
-            <h2>Use Items Carefully</h2>
+        </details>
+        <details>
+    <summary>How does the Lost & Found system work?</summary>
+    <p>
+        Report a lost or found item with its name, description, location,
+        date, and photo. If you find a matching item, contact the reporter
+        and verify the item’s unique details before returning it.
+    </p>
+    </details>
+        <details>
+            <summary>How does borrowing work?</summary>
             <p>
-              Borrowed items must be handled responsibly and returned in good condition.
+                Find an available item, send a request, agree on a return time,
+                confirm the handover, and return the item on time.
             </p>
-          </div>
-        </article>
-        <article class="rule-box">
-          <span class="rule-number">03</span>
-          <div>
-            <h2>Return on Time</h2>
+        </details>
+        <details>
+            <summary>What happens if an item is returned late?</summary>
             <p>
-              Return items by the agreed deadline or request an extension beforehand.
+                The borrower should request an extension before the deadline.
+                Repeated late returns may temporarily restrict borrowing access
+                and can be reviewed by an administrator.
             </p>
-          </div>
-        </article>
-        <article class="rule-box">
-          <span class="rule-number">04</span>
-          <div>
-            <h2>Be Honest</h2>
+        </details>
+        <details>
+            <summary>What should I do if I find someone’s item?</summary>
             <p>
-              Do not create fake listings, false claims, or misleading reports.
+                Report the item with its location and description so the owner
+                can identify and safely recover it.
             </p>
-          </div>
-        </article>
-        <article class="rule-box">
-          <span class="rule-number">05</span>
-          <div>
-            <h2>Respect Everyone</h2>
-            <p>
-              Harassment, abuse, fraud, and sharing private information are not allowed.
-            </p>
-          </div>
-        </article>
-        <article class="rule-box">
-          <span class="rule-number">06</span>
-          <div>
-            <h2>Report Problems</h2>
-            <p>
-              Report lost items, damage, fake listings, or overdue returns honestly.
-            </p>
-          </div>
-        </article>
-      </div>
-      <div class="warning-box">
-        <strong>If rules are broken:</strong>
-        users may receive a warning, lose borrowing access, or have their account
-        suspended after admin review.
-      </div>
-    </section>
-  </main>
+        </details>
+    </div>
+</section>
+
+           <section class="Hero-AI" id="AskNemo">
+     <h1>Nemo AI</h1>
+     <p class="ai-subtitle">Your campus assistant for lost items, borrowing, and more</p>
+  <div class="ai-box">
+    <label for="userPrompt">Ask Nemo anything:</label>
+    <textarea id="userPrompt" placeholder="Type your query here..."></textarea>
+    <button id="sendBtn">Send</button>
+  </div>
+  <div class="ai-response">
+    <div class="response-header">
+      <h3>Response:</h3>
+      <button id="copyBtn" class="copy-btn" title="Copy response">Copy</button>
+    </div>
+    <div id="responseBox" class="empty">AI answer will appear here...</div>
+  </div>
+</section>
+</main>
+</div>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="signup-box">
+            <span class="close-btn">&times;</span>
+            <h1>Campus Share Hub</h1>
+            <p>Create Your Student Account</p>
+            <form id="signupForm">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email ID" required>
+                <input type="text" placeholder="Student ID" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                <button type="submit">Create Account</button>
+            </form>
+            <div id="message"></div>
+            <p class="login-link">Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="signup-box">
+            <span class="close-btn">&times;</span>
+            <h1>Welcome Back</h1>
+            <p>Sign in to your account</p>
+            <form id="loginForm">
+                <input type="email" placeholder="Registered Email ID" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div id="loginMessage"></div>
+            <p class="login-link">Don't have an account? <a href="#" id="switchToRegister">Register</a></p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+        window.supabase = createClient('https://oaovywqdgxhckrknyicf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hb3Z5d3FkZ3hoY2tya255aWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NDA1MTMsImV4cCI6MjEwMjAxNjUxM30.Jl26NxPUbC90LorTM7eHeNzh0EaOhUKLamgO9PVML78');
+    </script>
+    <script src="header.js"></script>
+    <script src="Borrow.js"></script>
+    <script>
+    const sendBtn = document.getElementById('sendBtn');
+    const userPrompt = document.getElementById('userPrompt');
+    const responseBox = document.getElementById('responseBox');
+    const copyBtn = document.getElementById('copyBtn');
+
+    sendBtn.addEventListener('click', async () => {
+      const promptText = userPrompt.value.trim();
+
+      if (!promptText) {
+        alert('Please enter a prompt!');
+        return;
+      }
+
+      // UI feedback while loading
+      sendBtn.disabled = true;
+      sendBtn.classList.add('loading');
+      responseBox.innerText = 'Generating response from Nemo...';
+      responseBox.classList.remove('empty');
+
+      try {
+        const res = await fetch('/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: promptText })
+        });
+
+        const data = await res.json();
+
+        if (data.error) {
+          responseBox.innerText = 'Error: ' + data.error;
+        } else {
+          responseBox.innerText = data.result;
+          responseBox.classList.remove('empty');
+        }
+      } catch (err) {
+        responseBox.innerText = 'Failed to connect to backend server.';
+      } finally {
+        sendBtn.disabled = false;
+        sendBtn.classList.remove('loading');
+      }
+    });
+
+    // Copy response to clipboard
+    copyBtn.addEventListener('click', () => {
+      const text = responseBox.innerText;
+      if (text && text !== 'AI answer will appear here...') {
+        navigator.clipboard.writeText(text).then(() => {
+          copyBtn.textContent = 'Copied!';
+          copyBtn.classList.add('copied');
+          setTimeout(() => {
+            copyBtn.textContent = 'Copy';
+            copyBtn.classList.remove('copied');
+          }, 2000);
+        });
+      }
+    });
+  </script>
+  <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+  window.supabase = createClient('https://oaovywqdgxhckrknyicf.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9hb3Z5d3FkZ3hoY2tya255aWNmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0NDA1MTMsImV4cCI6MjEwMjAxNjUxM30.Jl26NxPUbC90LorTM7eHeNzh0EaOhUKLamgO9PVML78')
+</script>
 </body>
 </html>
