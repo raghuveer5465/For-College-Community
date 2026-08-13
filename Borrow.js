@@ -1,118 +1,215 @@
-window.addEventListener('scroll', () => {
-    const landingBar = document.querySelector('.landing_bar');
-    if (window.scrollY > 50) {
-        landingBar.classList.add('scrolled');
-    } else {
-        landingBar.classList.remove('scrolled');
+window.addEventListener('DOMContentLoaded', async () => {
+  const signupForm = document.getElementById('signupForm');
+  const signupMessage = document.getElementById('message');
+  const signupModal = document.getElementById('signupModal');
+
+  const loginForm = document.getElementById('loginForm');
+  const loginMessage = document.getElementById('loginMessage');
+  const loginModal = document.getElementById('loginModal');
+
+  // Helper functions for modals
+  window.openLogin = () => {
+    if (signupModal) signupModal.style.display = 'none';
+    if (loginModal) loginModal.style.display = 'block';
+    document.body.classList.add('modal-open');
+  };
+
+  window.openSignup = () => {
+    if (loginModal) loginModal.style.display = 'none';
+    if (signupModal) signupModal.style.display = 'block';
+    document.body.classList.add('modal-open');
+  };
+
+  const closeAllModals = () => {
+    if (loginModal) loginModal.style.display = 'none';
+    if (signupModal) signupModal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  };
+
+  // 1. Session state check
+  let currentUser = null;
+  if (window.supabase) {
+    const { data: { session } } = await window.supabase.auth.getSession();
+    if (session?.user) {
+      currentUser = session.user;
+      updateNavForLoggedInUser(currentUser);
     }
-});
-const modal = document.getElementById("signupModal");
-const registerBtn = document.getElementById("Register-btn");
-const closeBtn = document.getElementById("closeModalBtn");
-const overlay = document.getElementById("modalOverlay");
-const signupForm = document.getElementById("signupForm");
-const message = document.getElementById("message");
-registerBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    modal.style.display = "block";
-    document.body.classList.add("modal-open");
-});
-function closeModal() {
-    modal.style.display = "none";
-    document.body.classList.remove("modal-open");
-}
+  }
 
-closeBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
+  // 2. Global Click Listener for Modals & Protected Features
+  document.addEventListener('click', (e) => {
+    // Protected Links ("Learn More" / Feature cards)
+    const learnMoreTrigger = e.target.closest('.protected-feature');
+    if (learnMoreTrigger) {
+      e.preventDefault();
+      if (!currentUser) {
+        openLogin();
+        if (loginMessage) {
+          loginMessage.innerText = 'Please login to access dashboard features!';
+          loginMessage.style.color = '#ef4444';
+        }
+      } else {
+        window.location.href = 'dashboard.html';
+      }
+      return;
+    }
 
-signupForm.addEventListener("submit", function (e) {
-    e.preventDefault();
+    // Modal Triggers
+    if (e.target.matches('#Login-btn')) {
+      e.preventDefault();
+      openLogin();
+      return;
+    }
 
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
+    if (e.target.matches('#Register-btn')) {
+      e.preventDefault();
+      openSignup();
+      return;
+    }
 
-    if (password !== confirmPassword) {
-        message.style.color = "#f87171";
-        message.innerHTML = "Passwords do not match";
+    if (e.target.matches('#switchToLogin')) {
+      e.preventDefault();
+      openLogin();
+      return;
+    }
+
+    if (e.target.matches('#switchToRegister')) {
+      e.preventDefault();
+      openSignup();
+      return;
+    }
+
+    if (e.target.closest('.close-btn')) {
+      e.preventDefault();
+      closeAllModals();
+      return;
+    }
+
+    if (e.target === loginModal || e.target === signupModal) {
+      closeAllModals();
+    }
+  });
+
+  // 3. Sign Up Handler
+  if (signupForm) {
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fullNameInput = signupForm.querySelector('input[placeholder="Full Name"]');
+      const emailInput = signupForm.querySelector('input[placeholder="Email ID"]');
+      const studentIdInput = signupForm.querySelector('input[placeholder="Student ID"]');
+      const passwordInput = document.getElementById('password');
+      const confirmPasswordInput = document.getElementById('confirmPassword');
+
+      const fullName = fullNameInput ? fullNameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const studentId = studentIdInput ? studentIdInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+      const confirmPassword = confirmPasswordInput ? confirmPasswordInput.value : '';
+
+      if (password !== confirmPassword) {
+        if (signupMessage) {
+          signupMessage.innerText = 'Passwords do not match!';
+          signupMessage.style.color = 'red';
+        }
         return;
-    }
+      }
 
-    message.style.color = "#4ade80";
-    message.innerHTML = "Account Created Successfully!";
-    signupForm.reset();
-});
-// LOGIN Page
-const loginModal = document.getElementById("loginModal");
-const loginBtn = document.getElementById("Login-btn");
-const closeLoginBtn = document.getElementById("closeLoginModalBtn");
-const loginOverlay = document.getElementById("loginModalOverlay");
-const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
-const switchToRegister = document.getElementById("switchToRegister");
+      if (signupMessage) {
+        signupMessage.innerText = 'Creating account...';
+        signupMessage.style.color = '#333';
+      }
 
-loginBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    loginModal.style.display = "block";
-    document.body.classList.add("modal-open");
-});
+      const { data, error } = await window.supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            full_name: fullName,
+            student_id: studentId,
+          },
+        },
+      });
 
-function closeLoginModal() {
-    loginModal.style.display = "none";
-    document.body.classList.remove("modal-open");
-}
+      if (error) {
+        if (signupMessage) {
+          signupMessage.innerText = 'Error: ' + error.message;
+          signupMessage.style.color = 'red';
+        }
+      } else {
+        if (signupMessage) {
+          signupMessage.innerText = 'Registration successful! Check your email for confirmation.';
+          signupMessage.style.color = 'green';
+        }
+        signupForm.reset();
 
-closeLoginBtn.addEventListener("click", closeLoginModal);
-loginOverlay.addEventListener("click", closeLoginModal);
-
-switchToRegister.addEventListener("click", (e) => {
-    e.preventDefault();
-    closeLoginModal();
-    modal.style.display = "block";
-    document.body.classList.add("modal-open");
-});
-
-loginForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-    
-    loginMessage.style.color = "#4ade80";
-    loginMessage.innerHTML = "Logging in...";
-    
-    setTimeout(() => {
-        loginForm.reset();
-        loginMessage.innerHTML = "";
-        closeLoginModal();
-    }, 1500);
-});
-const switchToLogin = document.getElementById("switchToLogin");
-
-switchToLogin.addEventListener("click", (e) => {
-    e.preventDefault();
-    closeModal();
-    loginModal.style.display = "block";
-    document.body.classList.add("modal-open");
-});
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const navLinks = document.getElementById("navLinks");
-
-hamburgerBtn.addEventListener("click", () => {
-    const isOpen = navLinks.classList.toggle("open");
-    hamburgerBtn.classList.toggle("active");
-    hamburgerBtn.setAttribute("aria-expanded", isOpen);
-});
-navLinks.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        hamburgerBtn.classList.remove("active");
-        hamburgerBtn.setAttribute("aria-expanded", "false");
+        setTimeout(() => {
+          closeAllModals();
+          if (signupMessage) signupMessage.innerText = '';
+        }, 2000);
+      }
     });
+  }
+
+  // 4. Login Handler
+  if (loginForm) {
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const emailInput = loginForm.querySelector('input[placeholder="Registered Email ID"]');
+      const passwordInput = loginForm.querySelector('input[type="password"]');
+
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      if (loginMessage) {
+        loginMessage.innerText = 'Logging in...';
+        loginMessage.style.color = '#333';
+      }
+
+      const { data, error } = await window.supabase.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) {
+        if (loginMessage) {
+          loginMessage.innerText = 'Error: ' + error.message;
+          loginMessage.style.color = 'red';
+        }
+      } else {
+        if (loginMessage) {
+          loginMessage.innerText = 'Login successful! Redirecting...';
+          loginMessage.style.color = 'green';
+        }
+
+        setTimeout(() => {
+          closeAllModals();
+          loginForm.reset();
+          window.location.href = 'dashboard.html';
+        }, 800);
+      }
+    });
+  }
 });
-document.getElementById("Login-btn-mobile").addEventListener("click", (e) => {
-    e.preventDefault();
-    loginModal.style.display = "block";
-    document.body.classList.add("modal-open");
-});
-document.getElementById("Register-btn-mobile").addEventListener("click", (e) => {
-    e.preventDefault();
-    modal.style.display = "block";
-    document.body.classList.add("modal-open");
-});
+
+// Helper function to update Navbar
+function updateNavForLoggedInUser(user) {
+  const fullName = user?.user_metadata?.full_name || 'Student';
+  const navAuth = document.querySelector('.nav-auth');
+  if (navAuth) {
+    navAuth.innerHTML = `
+      <a href="dashboard.html" style="color: #6d28d9; margin-right: 8px;">Dashboard</a>
+      <span style="color: #121212; font-size: 14px; margin-right: 10px;">Hi, ${fullName}</span>
+      <a href="#" class="logout-btn" style="color: #fff; padding: 6px 12px; background: #ef4444; border-radius: 8px; font-size: 14px;">Logout</a>
+    `;
+  }
+
+  document.querySelectorAll('.logout-btn').forEach((btn) => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await window.supabase.auth.signOut();
+      window.location.reload();
+    });
+  });
+}
